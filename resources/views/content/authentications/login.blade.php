@@ -1,6 +1,6 @@
 @extends('layouts/blankLayout')
 
-@section('title', 'Login Basic - Pages')
+@section('title', 'Login')
 
 @section('page-style')
 @vite(['resources/assets/vendor/scss/pages/page-auth.scss'])
@@ -21,8 +21,8 @@
                         </a>
                     </div>
                     <!-- /Logo -->
-                    <h4 class="mb-1">Welcome to asqs {{ config('variables.APP_NAME') }}! 👋</h4>
-                    <p class="mb-6">Please sign-in to your account and start the adventure</p>
+                    <h4 class="mb-1">Welcome to {{ env('APP_NAME') }}! 👋</h4>
+                    <p class="mb-6">Please sign-in to your account!</p>
 
                     <form id="formAuthentication" class="mb-6" action="{{ route('login.submit') }}" method="POST">
                         @csrf
@@ -55,7 +55,7 @@
 
                     <p class="text-center">
                         <span>New on our platform?</span>
-                        <a href="{{ url('auth/register-basic') }}">
+                        <a href="{{ route('register') }}">
                             <span>Create an account</span>
                         </a>
                     </p>

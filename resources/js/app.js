@@ -7,3 +7,9 @@ import.meta.glob([
   // '../assets/json/**',
   '../assets/vendor/fonts/**'
 ]);
+
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+// jQuery Validation
+import 'jquery-validation';
