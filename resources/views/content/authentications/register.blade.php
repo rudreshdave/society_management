@@ -205,10 +205,7 @@
         <div class="register-wrapper">
             <div class="register-container">
 
-                <h3 class="text-center mb-2">Create Your Society</h3>
-                <p class="text-center text-muted mb-4">
-                    Just 2 steps to get started
-                </p>
+                <h3 class="text-center mb-2">Register Society</h3>
 
                 {{-- STEPPER --}}
                 <div class="stepper">
@@ -217,7 +214,7 @@
                     </div>
                     <div class="step-line"></div>
                     <div class="step" id="step2Indicator">
-                        <div class="step-circle">2</div> Admin
+                        <div class="step-circle">2</div> Society Admin
                     </div>
                 </div>
 
@@ -251,12 +248,20 @@
 
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label class="form-label required">City</label>
-                                <input type="text" name="city" class="form-control">
+                                <label class="form-label required">State</label>
+                                <select name="state_id" id="state_id" class="form-select">
+                                    <option value="">Select State</option>
+                                    @foreach($states as $id => $state)
+                                    $state
+                                    <option value="{{ $id }}">{{ $state }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label required">State</label>
-                                <input type="text" name="state" class="form-control">
+                                <label class="form-label required">City</label>
+                                <select name="city_id" id="city_id" class="form-select">
+                                    <option value="">Select City</option>
+                                </select>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label class="form-label required">Pincode</label>

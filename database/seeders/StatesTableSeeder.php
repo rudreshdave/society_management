@@ -43,6 +43,13 @@ class StatesTableSeeder extends Seeder
             ['name' => 'Uttarakhand', 'code' => 'UK'],
             ['name' => 'West Bengal', 'code' => 'WB'],
             ['name' => 'Delhi', 'code' => 'DL'],
+            ['name' => 'Andaman & Nicobar Islands', 'code' => 'AN'],
+            ['name' => 'Jammu & Kashmir', 'code' => 'JK'],
+            ['name' => 'Chandigarh', 'code' => 'CH'],
+            ['name' => 'Dadra & Nagar Haveli', 'code' => 'DH'],
+            ['name' => 'Daman And Diu', 'code' => 'DD'],
+            ['name' => 'Lakshadweep', 'code' => 'LD'],
+            ['name' => 'Puducherry', 'code' => 'PY'],
         ]);
     }
 }

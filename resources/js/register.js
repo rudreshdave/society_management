@@ -1,5 +1,33 @@
 $(document).ready(function () {
 
+      $('#state_id').on('change', function () {
+        let stateId = $(this).val();
+        $('#city_id').html('<option value="">Loading...</option>');
+
+        if (stateId) {
+            $.ajax({
+                url: `/api/cities/${stateId}`,
+                type: 'GET',
+                success: function (response) {
+
+                    // If API uses standard response
+                    let options = '<option value="">Select City</option>';
+
+                    $.each(response.data, function (id, name) {
+                        options += `<option value="${id}">${name}</option>`;
+                    });
+
+                    $('#city_id').html(options);
+                },
+                error: function () {
+                    $('#city_id').html('<option value="">No cities found</option>');
+                }
+            });
+        } else {
+            $('#city_id').html('<option value="">Select City</option>');
+        }
+    });
+
     const form = $("#societyRegisterForm");
 
     form.validate({

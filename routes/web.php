@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\authentications\Login;
-use App\Http\Controllers\authentications\Register;
-use App\Http\Controllers\authentications\Dashboard;
+use App\Http\Controllers\Admin\authentications\Login;
+use App\Http\Controllers\Admin\authentications\Register;
+use App\Http\Controllers\Admin\authentications\Dashboard;
 
 
 // Main Page Route
