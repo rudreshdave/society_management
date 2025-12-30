@@ -79,8 +79,6 @@ class Register extends Controller
       }
     } catch (\Exception $ex) {
       DB::rollBack();
-      print_r($ex->getMessage());
-      die;
       return redirect()->route('register');
     }
   }

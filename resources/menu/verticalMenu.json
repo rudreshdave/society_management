@@ -9,8 +9,28 @@
     {
       "url": "/societies",
       "name": "Societies",
-      "icon": "menu-icon icon-base bx bx-constructions",
+      "icon": "menu-icon icon-base bx bx-building",
       "slug": "societies"
+    },
+    {
+      "url": "/user_managements",
+      "name": "User Management",
+      "icon": "menu-icon icon-base bx bx-user",
+      "slug": "user_managements",
+      "submenu": [
+        {
+          "url": "/roles",
+          "name": "Roles",
+          "icon": "menu-icon icon-base bx bx-user-pin",
+          "slug": "roles"
+        },
+        {
+          "url": "/users",
+          "name": "Users",
+          "icon": "menu-icon icon-base bx bx-user-circle",
+          "slug": "users"
+        }
+      ]
     }
   ]
 }
