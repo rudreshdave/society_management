@@ -16,9 +16,11 @@ class CommonController extends Controller
     $this->common_service = $common_service;
   }
 
-  public function cities(Request $request)
+  public function cities(Request $request, $state_id = 0)
   {
     $data = $request->all();
+    $data['state_id'] = $state_id ?? null;
+
     $cities = $this->common_service->getCities($data);
     if (isset($cities)) {
       $response['status'] = true;

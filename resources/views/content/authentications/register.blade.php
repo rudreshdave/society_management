@@ -243,7 +243,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Address 2</label>
-                            <input type="text" name="address_line_1" class="form-control">
+                            <input type="text" name="address_line_2" class="form-control">
                         </div>
 
                         <div class="row">
@@ -298,11 +298,17 @@
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Password</label>
-                                <input type="password" id="password" name="password" class="form-control">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                                    <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                                </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Confirm Password</label>
-                                <input type="password" name="confirm_password" class="form-control">
+                                <div class="input-group input-group-merge">
+                                    <input type="password" id="confirm_password" class="form-control" name="confirm_password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="confirm_password" />
+                                    <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                                </div>
                             </div>
                         </div>
 
