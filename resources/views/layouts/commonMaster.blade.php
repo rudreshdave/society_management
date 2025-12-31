@@ -30,6 +30,7 @@
 
     <!-- Include Scripts for customizer, helper, analytics, config -->
     @include('layouts/sections/scriptsIncludes')
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
@@ -37,7 +38,7 @@
     @yield('layoutContent')
     <!--/ Layout Content -->
 
-    
+
 
     <!-- Include Scripts -->
     @include('layouts/sections/scripts')

@@ -1,0 +1,44 @@
+@import "datatables.net-bs5/css/dataTables.bootstrap5.css";
+@import "datatables.net-responsive-bs5/css/responsive.bootstrap5.css";
+@import "datatables.net-buttons-bs5/css/buttons.bootstrap5.css";
+
+/* === DATATABLES + SNEAT FIX === */
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 0.5rem;
+    display: inline-block;
+    width: auto;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    width: auto;
+    display: inline-block;
+}
+
+table.dataTable thead th {
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+table.dataTable thead th:before,
+table.dataTable thead th:after {
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
+}
+
+.dataTables_wrapper .dataTables_paginate .pagination {
+    justify-content: flex-end;
+}
+
+.dataTables_wrapper .dataTables_info {
+    padding-top: 0.85rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.datatables-basic .pagination .page-link {
+  border-radius: 0 !important;
+}
