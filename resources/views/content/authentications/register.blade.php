@@ -300,14 +300,14 @@
                                 <label class="form-label">Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                                    <span class="input-group-text cursor-pointer toggle-password"><i class="icon-base bx bx-hide"></i></span>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Confirm Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="confirm_password" class="form-control" name="confirm_password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="confirm_password" />
-                                    <span class="input-group-text cursor-pointer"><i class="icon-base bx bx-hide"></i></span>
+                                    <span class="input-group-text cursor-pointer toggle-password"><i class="icon-base bx bx-hide"></i></span>
                                 </div>
                             </div>
                         </div>

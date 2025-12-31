@@ -1,6 +1,20 @@
 $(document).ready(function () {
 
-      $('#state_id').on('change', function () {
+    $('.toggle-password').on('click', function () {
+
+        const input = $(this).siblings('input');
+        const icon = $(this).find('i');
+
+        if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            icon.removeClass('bx-hide').addClass('bx-show');
+        } else {
+            input.attr('type', 'password');
+            icon.removeClass('bx-show').addClass('bx-hide');
+        }
+    });
+
+    $('#state_id').on('change', function () {
         let stateId = $(this).val();
         $('#city_id').html('<option value="">Loading...</option>');
 
