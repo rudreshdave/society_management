@@ -20,8 +20,12 @@ return new class extends Migration
             $table->string('address_line_1');
             $table->string('address_line_2')->nullable();
 
-            $table->string('city');
-            $table->string('state');
+            $table->foreignId('city_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignId('state_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->string('pincode', 10);
 
             $table->string('contact_email');
@@ -29,8 +33,6 @@ return new class extends Migration
 
             $table->unsignedInteger('total_wings')->default(0);
             $table->unsignedInteger('total_flats')->default(0);
-
-            $table->string('logo')->nullable();
 
             // 1 = Active, 2 = Inactive
             $table->tinyInteger('status')->default(1)
