@@ -12,6 +12,9 @@ class Society extends Model
     use HasFactory;
 
     protected $table = 'societies';
+    protected $appends = ['status_label'];
+
+    protected $status_labels = [1 => "Active", 2 => "Inactive"];
     protected $fillable = [
         'society_name',
         'registration_no',
@@ -29,10 +32,14 @@ class Society extends Model
         'longitude'
     ];
 
+    public function getStatusLabelAttribute()
+    {
+        return $this->status_labels[$this->status];
+    }
 
     public function city(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class)->select('id', 'name');
     }
 
     public function state(): BelongsTo

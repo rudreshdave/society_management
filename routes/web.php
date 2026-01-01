@@ -16,5 +16,5 @@ Route::post('/register', [Register::class, 'register'])->name('register.submit')
 Route::middleware('auth:sanctum')->group(function () {
   Route::post('/logout', [Login::class, 'logout'])->name('logout');
   Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
-  Route::get('/societies', [SocietyController::class, 'index'])->name('societies');
+  Route::resource('societies', SocietyController::class);
 });

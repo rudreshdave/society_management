@@ -22,18 +22,54 @@
     border-color: #696cff;
     color: #fff;
   }
+
+  #dropArea {
+    border: 2px dashed #d9dee3;
+    background: #f9fafb;
+    transition: 0.3s;
+  }
+
+  #dropArea.dragover {
+    background: #eef4ff;
+    border-color: #696cff;
+  }
+
+  .preview-box {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+
+  .preview-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+  }
+
+  .preview-box .remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff3e1d;
+    color: #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+  }
 </style>
 @endsection
-
-
-
 
 @section('content')
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Users List</h5>
-    <a href="#" class="btn btn-primary btn-sm">
-      <i class="bx bx-plus"></i> Add User
+    <h5 class="mb-0">Societies List</h5>
+    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="openAddSociety()">
+      <i class="bx bx-plus"></i> Add Society
     </a>
   </div>
 
@@ -43,34 +79,35 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
-          <th>Email</th>
-          <th>Created At</th>
+          <th>Register No.</th>
+          <th>City</th>
+          <th>Total Wings</th>
+          <th>Total Flats</th>
+          <th>Status</th>
           <th width="120">Action</th>
         </tr>
       </thead>
       <tbody>
-        @foreach($users as $user)
+        @foreach($societies as $key => $society)
         <tr>
-          <td>{{ $user->id }}</td>
-          <td>
-            <div class="d-flex align-items-center">
-              <div class="avatar avatar-sm me-2">
-                <span class="avatar-initial rounded-circle bg-label-primary">
-                  {{ strtoupper(substr($user->name, 0, 1)) }}
-                </span>
-              </div>
-              <span>{{ $user->name }}</span>
-            </div>
-          </td>
-          <td>{{ $user->email }}</td>
-          <td>{{ $user->created_at->format('d M Y') }}</td>
+          <td>{{ $key+1 }}</td>
+          <td>{{ $society->society_name }}</td>
+          <td>{{ $society->registration_no }}</td>
+          <td>{{ $society->city->name }}</td>
+          <td>{{ $society->total_wings ?? '-' }}</td>
+          <td>{{ $society->total_flats ?? '-' }}</td>
+          <?php if ($society->status == 1) { ?>
+            <td><span class="badge bg-label-success" text-capitalized="">{{ $society->status_label ?? null }}</span></td>
+          <?php } elseif ($society->status == 2) { ?>
+            <td><span class="badge bg-label-danger" text-capitalized="">{{ $society->status_label ?? null }}</span></td>
+          <?php } ?>
           <td>
             <div class="dropdown">
               <button class="btn btn-sm btn-icon dropdown-toggle" data-bs-toggle="dropdown">
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="javascript:void(0)" onclick='openEditSociety(@json($society))'>
                   <i class="bx bx-edit-alt me-1"></i> Edit
                 </a>
                 <a class="dropdown-item text-danger" href="#">
@@ -86,6 +123,8 @@
   </div>
 </div>
 @endsection
+
+@include('content/admin/societies/society')
 
 @section('page-script')
 @vite([
