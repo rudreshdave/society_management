@@ -46,4 +46,10 @@ class Society extends Model
     {
         return $this->belongsTo(State::class);
     }
+
+    public function attachments()
+    {
+        return $this->morphMany(Attachment::class, 'module')
+            ->orderBy('sort_order');
+    }
 }

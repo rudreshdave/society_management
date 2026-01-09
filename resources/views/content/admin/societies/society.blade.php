@@ -7,9 +7,24 @@
   </div>
 
   <div class="offcanvas-body">
-    <form id="societyForm" method="POST" action="{{ route('societies.store') }}" enctype="multipart/form-data">
+
+    {{-- Global Errors --}}
+    @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+    @endif
+
+    <form id="societyForm" method="POST" action="{{ isset($society) ? route('societies.update', $society->id) : route('societies.store') }}" enctype="multipart/form-data">
+      @if(isset($society))
+      @method('PUT')
+      @endif
       @csrf
-      <input type="hidden" name="_method" id="formMethod" value="POST">
+
       <input type="hidden" name="id" id="society_id">
 
       <div class="mb-3">
@@ -98,9 +113,11 @@
             multiple
             hidden>
 
-          <div id="previewContainer" class="d-flex flex-wrap gap-2 mt-3"></div>
+          <div id="previewContainer" class="d-flex flex-wrap gap-2 mt-3">
+          </div>
         </div>
 
+        <input type="hidden" name="attachments_sort" id="attachments_sort">
         <!-- Existing images (edit mode) -->
         <input type="hidden" name="removed_logos" id="removed_logos">
       </div>

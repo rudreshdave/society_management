@@ -61,6 +61,10 @@
     border: none;
     cursor: pointer;
   }
+
+  .sortable-ghost {
+    opacity: 0.4;
+  }
 </style>
 @endsection
 
