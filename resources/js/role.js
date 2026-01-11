@@ -21,16 +21,26 @@ let sortableInstance = null;
    OFFCANVAS
 ========================== */
 window.openAddRole = function () {
-  document.getElementById('roleForm').reset();
+  const form = document.getElementById('roleForm');
+
+  form.reset();
+
+  // 🔥 FORCE STORE MODE
+  form.action = '/roles';
+  document.getElementById('formMethod').value = 'POST';
+  document.getElementById('role_id').value = '';
 
   new bootstrap.Offcanvas('#roleOffcanvas').show();
 };
 
 window.openEditRole = function (role) {
-  console.log(role);
+  const form = document.getElementById('roleForm');
+
   document.getElementById('role_id').value = role.id;
   document.getElementById('name').value = role.name;
-  document.getElementById('slug').value = role.slug;
+
+  form.action = `/roles/${role.id}`;
+  document.getElementById('formMethod').value = 'PUT';
 
   new bootstrap.Offcanvas('#roleOffcanvas').show();
 }
@@ -51,15 +61,26 @@ window.deleteRole = function (id) {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
+      console.log("/roles/" + id);
       $.ajax({
         url: `/roles/${id}`,   // ✅ Add the ID here
-        type: 'DELETE',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token
+        type: 'POST',
+        data: {
+          _token: $('meta[name="csrf-token"]').attr('content'),
+          _method: 'DELETE'
         },
         success: function (res) {
-          Swal.fire('Deleted!', res.message ?? 'Role deleted successfully', 'success');
-          location.reload(); // or use DataTable reload if applicable
+          Swal.fire({
+            title: 'Deleted!',
+            text: res.message ?? 'Role deleted successfully',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          });
+          // location.reload(); // or use DataTable reload if applicable
         },
         error: function (xhr) {
           Swal.fire('Error', xhr.responseJSON?.message ?? 'Something went wrong', 'error');

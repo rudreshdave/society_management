@@ -25,7 +25,7 @@ class SocietyRequest extends FormRequest
 
     public function rules(): array
     {
-        $id = $this->route('society'); // for update route-model binding (optional)
+        $id = $this->route('societies'); // for update route-model binding (optional)
 
         return [
             'society_name'     => 'required|string|max:255',

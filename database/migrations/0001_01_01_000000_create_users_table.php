@@ -21,6 +21,7 @@ return new class extends Migration
             $table->tinyInteger('status')->nullable()->default(1)->comment('1=Active, 2=Inactive, 3=Blocked');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes(); // adds deleted_at
         });
 
         Schema::create('roles', function (Blueprint $table) {
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->timestamps();
+            $table->softDeletes(); // adds deleted_at
         });
 
         Schema::create('user_roles', function (Blueprint $table) {

@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 
 class CitiesTableSeeder extends Seeder
 {
@@ -17,39 +15,54 @@ class CitiesTableSeeder extends Seeder
      */
     public function run(): void
     {
+        // Fetch states as: ['STATE NAME' => id]
         $states = DB::table('states')
             ->select('id', 'name')
             ->get()
-            ->mapWithKeys(function ($item) {
-                return [Str::upper(trim($item->name)) => $item->id];
+            ->mapWithKeys(function ($state) {
+                return [
+                    Str::upper(trim($state->name)) => $state->id
+                ];
             });
 
         $filePath = storage_path('app/cities_data.xlsx');
 
-        $data = Excel::toCollection(collect(), $filePath)->first();
+        if (!file_exists($filePath)) {
+            $this->command->error('cities_data.xlsx file not found.');
+            return;
+        }
 
-        $data->each(function ($row) use ($states) {
-            $stateName = $row[0]; // Adjust index based on your Excel column
-            $cityName  = $row[1];
+        $rows = Excel::toCollection(collect(), $filePath)->first();
 
-            if (empty($stateName) || empty($cityName) || $stateName === 'State') {
+        $rows->each(function ($row, $index) use ($states) {
+
+            // Skip header row
+            if ($index === 0) {
                 return;
             }
 
-            if (isset($states[$stateName])) {
-                // updateOrInsert(unique_constraints, values_to_update)
-                DB::table('cities')->updateOrInsert(
-                    [
-                        'state_id' => $states[$stateName],
-                        'name'     => $cityName
-                    ],
-                    [
-                        'updated_at' => Carbon::now()
-                    ]
-                );
-            } else {
-                $this->command->warn("State not found in DB: {$stateName}");
+            $stateName = isset($row[0]) ? Str::upper(trim($row[0])) : null;
+            $cityName  = isset($row[1]) ? trim($row[1]) : null;
+
+            if (empty($stateName) || empty($cityName)) {
+                return;
             }
+
+            if (!isset($states[$stateName])) {
+                $this->command->warn("State not found in DB: {$stateName}");
+                return;
+            }
+
+            DB::table('cities')->updateOrInsert(
+                [
+                    'state_id' => $states[$stateName],
+                    'name'     => $cityName,
+                ],
+                [
+                    'updated_at' => Carbon::now(),
+                    'created_at' => Carbon::now(),
+                ]
+            );
         });
     }
 }

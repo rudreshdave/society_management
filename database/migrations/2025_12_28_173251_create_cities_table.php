@@ -18,6 +18,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('name');
             $table->timestamps();
+            $table->softDeletes(); // adds deleted_at
         });
     }
 

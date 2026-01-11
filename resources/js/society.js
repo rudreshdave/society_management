@@ -293,13 +293,22 @@ window.deleteSociety = function (id) {
     if (result.isConfirmed) {
       $.ajax({
         url: `/societies/${id}`,   // ✅ Add the ID here
-        type: 'DELETE',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token
+        type: 'POST',
+        data: {
+          _token: $('meta[name="csrf-token"]').attr('content'),
+          _method: 'DELETE'
         },
         success: function (res) {
-          Swal.fire('Deleted!', res.message ?? 'Society deleted successfully', 'success');
-          location.reload(); // or use DataTable reload if applicable
+          Swal.fire({
+            title: 'Deleted!',
+            text: res.message ?? 'Role deleted successfully',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              location.reload();
+            }
+          });
         },
         error: function (xhr) {
           Swal.fire('Error', xhr.responseJSON?.message ?? 'Something went wrong', 'error');

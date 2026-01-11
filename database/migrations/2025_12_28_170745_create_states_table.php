@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code', 5)->nullable(); // e.g. MH, GJ
             $table->string('country')->default('India');
             $table->timestamps();
+            $table->softDeletes(); // adds deleted_at
         });
     }
 

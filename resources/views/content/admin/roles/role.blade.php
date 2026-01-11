@@ -18,22 +18,16 @@
     </div>
     @endif
 
-    <form id="roleForm" method="POST" action="{{ isset($role) ? route('roles.update', $role->id) : route('roles.store') }}" enctype="multipart/form-data">
-      @if(isset($role))
-      @method('PUT')
-      @endif
+    <form id="roleForm" method="POST" action="{{ route('roles.store') }}" enctype="multipart/form-data">
       @csrf
+      <input type="hidden" name="_method" id="formMethod" value="POST">
+      <input type="hidden" name="id" id="role_id">
 
       <input type="hidden" name="id" id="role_id">
 
       <div class="mb-3">
         <label class="form-label">Name <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="name" name="name">
-      </div>
-
-      <div class="mb-3" aria-disabled="true">
-        <label class="form-label">Slug <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="slug" name="slug">
       </div>
 
       <div class="d-flex justify-content-end gap-2">
