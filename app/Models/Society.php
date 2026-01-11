@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Society extends Model
 {
@@ -14,7 +15,7 @@ class Society extends Model
     protected $table = 'societies';
     protected $appends = ['status_label'];
 
-    protected $status_labels = [1 => "Active", 2 => "Inactive"];
+    protected $status_labels = [1 => "Active", 2 => "Inactive", 3 => "Block"];
     protected $fillable = [
         'society_name',
         'registration_no',

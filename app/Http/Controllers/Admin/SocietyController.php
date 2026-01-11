@@ -56,4 +56,21 @@ class SocietyController extends Controller
 
     return back()->with('success', 'Society deleted successfully');
   }
+
+  public function changeStatus(Request $request)
+  {
+    $request->validate([
+      'id'     => 'required|exists:societies,id',
+      'status' => 'required|in:1,2,3'
+    ]);
+
+    $society = Society::findOrFail($request->id);
+    $society->status = $request->status;
+    $society->save();
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Society status updated successfully'
+    ]);
+  }
 }

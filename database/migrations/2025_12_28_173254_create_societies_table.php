@@ -42,6 +42,10 @@ return new class extends Migration
             $table->string('longitude', 50)->nullable();
 
             $table->timestamps();
+
+            // ✅ Soft Deletes column
+            $table->softDeletes(); // adds deleted_at
+
         });
     }
 

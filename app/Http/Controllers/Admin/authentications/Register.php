@@ -42,7 +42,7 @@ class Register extends Controller
         'pincode' => $data['pincode'] ?? null,
         'contact_email' => $data['email'] ?? null,
         'contact_mobile' => $data['mobile'] ?? null,
-        'status' => 0
+        'status' => 2
       ];
 
       $society = new Society();

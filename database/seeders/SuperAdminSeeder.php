@@ -16,6 +16,7 @@ class SuperAdminSeeder extends Seeder
             [
                 'name'     => 'Super Admin',
                 'email' => 'superadmin@yopmail.com',
+                'mobile' => '9999999999',
                 'password' => Hash::make('Superadmin@1234'),
                 'status'   => 1,
             ]

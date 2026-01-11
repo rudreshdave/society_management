@@ -28,19 +28,19 @@
       <input type="hidden" name="id" id="society_id">
 
       <div class="mb-3">
-        <label class="form-label">Society Name *</label>
+        <label class="form-label">Society Name <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="society_name" name="society_name">
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Registration No *</label>
+        <label class="form-label">Registration No <span class="text-danger">*</span></label>
         <input type="text" class="form-control" id="registration_no" name="registration_no">
       </div>
 
       <!-- Address Line 1 -->
       <div class="mb-3">
         <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" id="address_line_1" name="address_line_1" required>
+        <input type="text" class="form-control" id="address_line_1" name="address_line_1">
       </div>
 
       <!-- Address Line 2 (Optional) -->

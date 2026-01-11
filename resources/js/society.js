@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  $.fn.dataTable.ext.errMode = 'none';
   /* ==========================
      DATATABLE
   ========================== */
@@ -273,3 +274,56 @@ function syncAttachmentsSort() {
   if (!attachmentsSortInput) return;
   attachmentsSortInput.value = JSON.stringify(existingLogos);
 }
+
+window.deleteSociety = function (id) {
+  if (!id) {
+    console.error('Society ID missing');
+    return;
+  }
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "This society will be deleted!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#696cff',
+    cancelButtonColor: '#ff3e1d',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: `/societies/${id}`,   // ✅ Add the ID here
+        type: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // CSRF token
+        },
+        success: function (res) {
+          Swal.fire('Deleted!', res.message ?? 'Society deleted successfully', 'success');
+          location.reload(); // or use DataTable reload if applicable
+        },
+        error: function (xhr) {
+          Swal.fire('Error', xhr.responseJSON?.message ?? 'Something went wrong', 'error');
+        }
+      });
+    }
+  });
+}
+
+window.changeStatus = function (id, status) {
+  $.ajax({
+    url: `/societies/change-status`,
+    type: 'POST',
+    data: {
+      _token: $('meta[name="csrf-token"]').attr('content'),
+      id: id,
+      status: status
+    },
+    success: function (res) {
+      toastr.success(res.message);
+      location.reload();
+    },
+    error: function () {
+      toastr.error('Failed to update status');
+    }
+  });
+};

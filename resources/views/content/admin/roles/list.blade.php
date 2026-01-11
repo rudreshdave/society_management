@@ -1,12 +1,12 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Users List')
+@section('title', 'Roles List')
 
 
 @section('page-style')
 <style>
   /* Square pagination only for this table */
-  #societiesTable .pagination .page-link {
+  #rolesTable .pagination .page-link {
     border-radius: 0 !important;
     min-width: 36px;
     height: 36px;
@@ -17,10 +17,23 @@
   }
 
   /* Active page (Sneat primary) */
-  .societies-datatable .pagination .page-item.active .page-link {
+  .roles-datatable .pagination .page-item.active .page-link {
     background-color: #696cff;
     border-color: #696cff;
     color: #fff;
+  }
+
+  .roles-datatable th,
+  .roles-datatable td {
+    white-space: nowrap;
+    /* content won't wrap */
+    width: auto;
+    /* allow auto width */
+  }
+
+  .roles-datatable {
+    table-layout: auto;
+    /* auto size based on content */
   }
 
   #dropArea {
@@ -71,62 +84,36 @@
 @section('content')
 <div class="card">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Societies List</h5>
-    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="openAddSociety()">
-      <i class="bx bx-plus"></i> Add Society
+    <h5 class="mb-0">Roles List</h5>
+    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="openAddRole()">
+      <i class="bx bx-plus"></i> Add Role
     </a>
   </div>
 
   <div class="card-datatable table-responsive">
-    <table class="table table-bordered table-hover societies-datatable " id="societiesTable">
+    <table class="table table-bordered table-hover roles-datatable " id="rolesTable">
       <thead class="table-light">
         <tr>
-          <th>ID</th>
+          <th>No.</th>
           <th>Name</th>
-          <th>Register No.</th>
-          <th>City</th>
-          <th>Total Wings</th>
-          <th>Total Flats</th>
-          <th>Status</th>
           <th width="120">Action</th>
         </tr>
       </thead>
       <tbody>
-        @foreach($societies as $key => $society)
+        @foreach($roles as $key => $role)
         <tr>
           <td>{{ $key+1 }}</td>
-          <td>{{ $society->society_name }}</td>
-          <td>{{ $society->registration_no }}</td>
-          <td>{{ $society->city->name }}</td>
-          <td>{{ $society->total_wings ?? '-' }}</td>
-          <td>{{ $society->total_flats ?? '-' }}</td>
-          <td>
-            <div class="dropdown">
-              <button class="btn btn-sm dropdown-toggle badge bg-label-{{ 
-      $society->status == 1 ? 'success' : 
-      ($society->status == 2 ? 'warning' : 'danger') 
-    }}"
-                data-bs-toggle="dropdown">
-                {{ $society->status_label }}
-              </button>
-
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" onclick="changeStatus({{ $society->id }},1)">Active</a></li>
-                <li><a class="dropdown-item" onclick="changeStatus({{ $society->id }},2)">Inactive</a></li>
-                <li><a class="dropdown-item" onclick="changeStatus({{ $society->id }},3)">Block</a></li>
-              </ul>
-            </div>
-          </td>
+          <td>{{ $role->name }}</td>
           <td>
             <div class="dropdown">
               <button class="btn btn-sm btn-icon dropdown-toggle" data-bs-toggle="dropdown">
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="javascript:void(0)" onclick='openEditSociety(@json($society))'>
+                <a class="dropdown-item" href="javascript:void(0)" onclick='openEditRole(@json($role))'>
                   <i class="bx bx-edit-alt me-1"></i> Edit
                 </a>
-                <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="deleteSociety({{ $society->id }})">
+                <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="deleteRole({{ $role->id }})">
                   <i class="bx bx-trash me-1"></i> Delete
                 </a>
               </div>
@@ -140,12 +127,12 @@
 </div>
 @endsection
 
-@include('content/admin/societies/society')
+@include('content/admin/roles/role')
 
 @section('page-script')
 @vite([
 'resources/js/app.js',
-'resources/js/society.js'
+'resources/js/role.js'
 ])
 
 @endsection

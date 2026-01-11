@@ -11,7 +11,7 @@ class CommonService
   {
     $cities = new City();
     if (isset($data['state_id']) && !empty($data['state_id'])) {
-      $cities = $cities->where('state_id', $data['state_id']);
+      $cities = $cities->selectRaw('id, UPPER(name) as name')->where('state_id', $data['state_id']);
     }
     return $cities = $cities->pluck('name', 'id');
   }
