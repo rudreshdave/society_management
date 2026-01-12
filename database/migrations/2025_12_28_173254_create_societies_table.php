@@ -40,6 +40,9 @@ return new class extends Migration
 
             $table->string('latitude', 50)->nullable();
             $table->string('longitude', 50)->nullable();
+            $table->string('database_name')->nullable()->default(null);
+            $table->string('database_username')->nullable()->default(null);
+            $table->string('database_password')->nullable()->default(null);
 
             $table->timestamps();
 

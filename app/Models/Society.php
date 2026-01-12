@@ -30,7 +30,10 @@ class Society extends Model
         'total_flats',
         'status',
         'latitude',
-        'longitude'
+        'longitude',
+        'database_name',
+        'database_username',
+        'database_password'
     ];
 
     public function getStatusLabelAttribute()

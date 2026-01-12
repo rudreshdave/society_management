@@ -26,6 +26,7 @@ class User extends Authenticatable
         'name',
         'username',
         'email',
+        'mobile',
         'password',
         'status',
     ];
@@ -62,5 +63,11 @@ class User extends Authenticatable
     {
         // Basic pivot table relationship
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id')->withTimestamps(); // includes created_at and updated_at
+    }
+
+    public function societies()
+    {
+        // Basic pivot table relationship
+        return $this->belongsToMany(Society::class, 'user_roles', 'user_id', 'society_id')->withTimestamps(); // includes created_at and updated_at
     }
 }

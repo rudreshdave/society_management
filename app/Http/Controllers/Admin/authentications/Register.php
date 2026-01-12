@@ -42,7 +42,10 @@ class Register extends Controller
         'pincode' => $data['pincode'] ?? null,
         'contact_email' => $data['email'] ?? null,
         'contact_mobile' => $data['mobile'] ?? null,
-        'status' => 2
+        'status' => 2,
+        'database_name' => Str::slug($data['society_name'], '_'),
+        'database_username' => env('DB_USERNAME'),
+        'database_password' => env('DB_PASSWORD')
       ];
 
       $society = new Society();
@@ -52,8 +55,9 @@ class Register extends Controller
         $insert_user = [
           'name' => $data['name'] ?? null,
           'email' => $data['email'] ?? null,
+          'mobile' => $data['mobile'] ?? null,
           'password' => isset($data['password']) && !empty($data['password']) ? Hash::make($data['password']) : null,
-          'status' => 0,
+          'status' => 2,
         ];
 
         $user = new User();

@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Services\CommonService;
+use App\Traits\ApiResponse;
 
 class CommonController extends Controller
 {
+
+  use ApiResponse;
 
   public $common_service;
   public function __construct(CommonService $common_service)
@@ -28,6 +31,52 @@ class CommonController extends Controller
       $response['data'] = $cities;
 
       return response()->json($response, 200);
+    }
+  }
+
+  function commonpagination($request, $data_query, $fields = [], $params = [])
+  {
+
+    $sort_by = 'id';
+    if (isset($request->sort_by) && !empty($request->sort_by)) {
+      $sort_by = $request->sort_by;
+    }
+    if (!in_array($sort_by, $fields)) {
+      return $this->customResponse(2, trans("translate.invalid_requrst_parameterrs", implode(', ', $fields)));
+    }
+
+    $sort_order = isset($request->sort_order) && in_array($request->sort_order, ['asc', 'desc']) ? $request->sort_order : 'desc';
+
+    $per_page = $request->per_page ?: 200;
+    $page = $request->page ? $request->page : 0;
+    $data_query->orderBy($sort_by, $sort_order);
+
+    //        dd($page, $per_page);
+
+    $response = [];
+    // Otherwise, proceed with regular pagination
+    if (isset($page) && !empty($page) && $page > 0) {
+      $data_query = $data_query->paginate($per_page, ['*'], 'page', $page);
+
+      $data = collect($data_query->items());
+      $pagination = array(
+        'total' => $data_query->total(),
+        'per_page' => $data_query->perPage(),
+        'current_page' => $data_query->currentPage(),
+        'last_page' => $data_query->lastPage(),
+        'next_page_url' => $data_query->nextPageUrl(),
+        'prev_page_url' => $data_query->previousPageUrl(),
+        'from' => $data_query->firstItem(),
+        'to' => $data_query->lastItem()
+      );
+    } else {
+      $data = $data_query->get();
+      $pagination = null;
+    }
+    if ($data->isEmpty()) {
+      return $this->customResponse(8, trans("translate.no_record_found"));
+    } else {
+      return $this->customResponse(1, trans("translate.record_found", ["model" => $this->model]), $data, $pagination);
     }
   }
 }

@@ -1,0 +1,28 @@
+<?php
+
+return [
+  "user_logged_in" => "User Login Successfully!",
+  "logged_out" => "User Logout Successfully!",
+  "not_logged_in" => "User Not Logged in ",
+  "reset_password" => "User Password Reset Successfully!",
+  "user_not_found" => "User Not Found!",
+  "forgot_mail_send" => "Forgot Mail Send Successfully!",
+  "user_register" => "User Register Successfully!",
+  "user_found" => "User Details!",
+  "user_updated" => "User Saved Successfully!",
+  "change_password" => "Change Password Successfully!",
+  "no_record_found" => "No Record Found!",
+  "invalid_requrst_parameterrs" => "Invalid sortBy parameter. Allowed values :fields",
+  "record_found" => ":model Found Successfully!",
+  "record_saved" => ":model Saved Successfully!",
+  "record_deleted" => ":model Deleted Successfully!",
+  "record_not_deleted" => ":model Not able to Delete Beacuae its Assign Already!",
+  "luggage_found_mail_send" => "Luggage Found Mail Send!",
+  "otp_sent" => "Otp Send Successfully!",
+  "otp_verified" => "Otp Verified!",
+  "otp_not_valid" => "Otp Not Valid!",
+  "country_list_found" => "Country List Found!",
+  "something_went_wrong" => "Something Went Wrong!",
+  "invalid_requrst_parameterrs" => "Invalid Request Parameters",
+  "user_with_qrcode_cannot_be_deleted" => "User with an allotted QR code cannot be deleted.",
+];
