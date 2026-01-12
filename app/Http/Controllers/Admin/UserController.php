@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Society;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\UserRole;
+// use App\Models\UserRole;
 use App\Models\Role;
 
 class UserController extends Controller
@@ -17,20 +17,35 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        $roles = Role::selectRaw('id, UPPER(name) as name')->pluck('name', 'id');
+        $roles = Role::selectRaw('id, UPPER(name) as name')->whereNotIn('id', [1])->pluck('name', 'id');
         $societies = Society::selectRaw('id, UPPER(society_name) as name')->pluck('name', 'id');
-        $users = new User();
-        if (isset($data['role_id']) && !empty($data['role_id'])) {
-            $user_ids = UserRole::where('role_id', $data['role_id'])->pluck('user_id');
-        }
-        if (isset($data['society_id']) && !empty($data['society_id'])) {
-            $user_ids = UserRole::where('society_id', $data['society_id'])->pluck('user_id');
-        }
-        if (isset($user_ids) && !empty($user_ids)) {
-            $users = $users->whereIn('id', $user_ids);
-        }
-        $users = $users->orderBy('id', 'desc')->get();
-        return view('content.admin.roles.list', compact('roles', 'users'));
+
+        $users = User::query()
+
+            // ❌ Always exclude Superadmin users
+            ->whereDoesntHave('roles', function ($q) {
+                $q->where('roles.id', 1);
+            })
+
+            // ✅ Filter by Role (only if role_id exists)
+            ->when(!empty($request->role_id), function ($q) use ($request) {
+                $q->whereHas('roles', function ($qr) use ($request) {
+                    $qr->where('roles.id', $request->role_id);
+                });
+            })
+
+            // ✅ Filter by Society (only if society_id exists)
+            ->when($request->filled('society_id'), function ($q) use ($request) {
+                $q->whereHas('roles', function ($qr) use ($request) {
+                    $qr->where('user_roles.society_id', $request->society_id);
+                });
+            })
+
+
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return view('content.admin.users.list', compact('roles', 'societies', 'users'));
     }
 
     /**
@@ -79,5 +94,22 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $request->validate([
+            'id'     => 'required|exists:users,id',
+            'status' => 'required|in:1,2,3'
+        ]);
+
+        $user = User::findOrFail($request->id);
+        $user->status = $request->status;
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User status updated successfully'
+        ]);
     }
 }

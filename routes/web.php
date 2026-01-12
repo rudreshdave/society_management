@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\authentications\Register;
 use App\Http\Controllers\Admin\authentications\Dashboard;
 use App\Http\Controllers\Admin\SocietyController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 
 
 // Main Page Route
@@ -22,4 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('/societies/change-status', [SocietyController::class, 'changeStatus'])->name('societies.changeStatus');
 
   Route::resource('roles', RoleController::class);
+
+  Route::resource('users', UserController::class);
+  Route::post('/users/change-status', [UserController::class, 'changeStatus'])->name('users.changeStatus');
 });
