@@ -70,15 +70,10 @@
 
 @section('content')
 <div class="card">
-  <div class="card-header d-flex justify-content-between align-items-center">
-    <h5 class="mb-0">Users List</h5>
-    <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="openAddUser()">
-      <i class="bx bx-plus"></i> Add User
-    </a>
-  </div>
+
 
   {{-- Filters --}}
-  <div class="row g-2 align-items-center">
+  <div class="row g-2  mt-2 d-flex align-items-center">
     <div class="col-md-3">
       <select id="roleFilter" class="form-select">
         <option value="">All Roles</option>
@@ -155,9 +150,6 @@
                 <i class="bx bx-dots-vertical-rounded"></i>
               </button>
               <div class="dropdown-menu dropdown-menu-end">
-                <a class="dropdown-item" href="javascript:void(0)" onclick='openEditUser(@json($user))'>
-                  <i class="bx bx-edit-alt me-1"></i> Edit
-                </a>
                 <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="deleteUser({{ $user->id }})">
                   <i class="bx bx-trash me-1"></i> Delete
                 </a>
