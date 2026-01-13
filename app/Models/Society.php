@@ -15,6 +15,8 @@ class Society extends Model
     protected $table = 'societies';
     protected $appends = ['status_label'];
 
+    protected $hidden = ['pivot'];
+
     protected $status_labels = [1 => "Active", 2 => "Inactive", 3 => "Block"];
     protected $fillable = [
         'society_name',

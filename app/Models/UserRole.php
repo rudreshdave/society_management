@@ -8,6 +8,8 @@ class UserRole extends Model
 {
     protected $table = 'user_roles';
 
+    protected $hidden = ['pivot'];
+
     protected $fillable = [
         'user_id',
         'role_id',

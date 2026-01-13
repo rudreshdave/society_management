@@ -12,6 +12,8 @@ class City extends Model
   use SoftDeletes;
   protected $fillable = ['state_id', 'name'];
 
+  protected $hidden = ['pivot'];
+
   public function state(): BelongsTo
   {
     return $this->belongsTo(State::class);

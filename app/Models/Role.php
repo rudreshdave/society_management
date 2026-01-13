@@ -13,6 +13,8 @@ class Role extends Model
         'slug',
     ];
 
+    protected $hidden = ['pivot'];
+
     public function users()
     {
         return $this->belongsToMany(User::class)

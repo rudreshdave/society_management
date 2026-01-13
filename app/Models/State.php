@@ -12,6 +12,8 @@ class State extends Model
   use SoftDeletes;
   protected $fillable = ['name', 'code'];
 
+  protected $hidden = ['pivot'];
+
   public function cities(): HasMany
   {
     return $this->hasMany(City::class);
