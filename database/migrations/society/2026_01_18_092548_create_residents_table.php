@@ -14,20 +14,13 @@ return new class extends Migration
             $table->enum('resident_type', ['Owner', 'Renter']);
 
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('flat_id');
+            $table->unsignedBigInteger('property_id');
 
             $table->string('alternate_mobile', 15)->nullable();
 
             $table->date('move_in_date')->nullable();
 
-            $table->string('id_proof_type')->nullable();
-            $table->string('id_proof_number')->nullable();
-            $table->string('id_proof_document')->nullable(); // file path
-
             $table->string('emergency_contact', 15)->nullable();
-
-            $table->text('vehicle_info')->nullable(); // JSON or text for multiple vehicles
-            $table->string('parking_slot')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -37,8 +30,12 @@ return new class extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade');
 
-            $table->foreign('flat_id')
-                ->references('id')->on('flats')
+            $table->foreign('property_id')
+                ->references('id')->on('properties')
+                ->onDelete('cascade');
+
+            $table->foreign('parking_slot_id')
+                ->references('id')->on('parking_slots')
                 ->onDelete('cascade');
         });
     }

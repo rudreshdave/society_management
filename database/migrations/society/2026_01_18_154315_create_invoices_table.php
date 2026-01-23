@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('invoice_no')->unique();
             $table->unsignedBigInteger('monthly_bill_id')->nullable();
-            $table->unsignedBigInteger('flat_id')->nullable();
+            $table->unsignedBigInteger('property_id')->nullable();
             $table->date('invoice_date')->nullable();
             $table->date('due_date')->nullable();
             $table->decimal('total_amount', 10, 2)->nullable();
@@ -29,9 +29,9 @@ return new class extends Migration
                 ->on('monthly_bills')
                 ->onDelete('cascade');
 
-            $table->foreign('flat_id')
+            $table->foreign('property_id')
                 ->references('id')
-                ->on('flats')
+                ->on('properties')
                 ->onDelete('cascade');
         });
     }

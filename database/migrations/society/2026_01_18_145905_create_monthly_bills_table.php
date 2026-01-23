@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('monthly_bills', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('property_id')->nullable();
             $table->unsignedBigInteger('monthly_rates_id')->nullable();
             $table->unsignedTinyInteger('month')->nullable();
             $table->unsignedSmallInteger('year')->nullable();
@@ -22,8 +23,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('flat_id')->references('id')->on('flats')->onDelete('cascade');
-            $table->unique(['flat_id', 'month', 'year']);
+            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
+            $table->unique(['property_id', 'month', 'year']);
         });
     }
 

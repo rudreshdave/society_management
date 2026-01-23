@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('visitor_name');
-            $table->unsignedBigInteger('flat_id');
+            $table->unsignedBigInteger('property_id');
 
             $table->dateTime('check_in_time')->nullable();
             $table->dateTime('check_out_time')->nullable();
@@ -34,8 +34,8 @@ return new class extends Migration
             $table->softDeletes();
 
             // Foreign Keys (recommended)
-            $table->foreign('flat_id')
-                ->references('id')->on('flats')
+            $table->foreign('property_id')
+                ->references('id')->on('properties')
                 ->onDelete('cascade');
 
             $table->foreign('created_by')

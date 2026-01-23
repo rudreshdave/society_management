@@ -48,12 +48,11 @@ class Helper
    */
   public function create_database($database_name)
   {
-    DB::statement("
-        IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '$database_name')
-        BEGIN
-            CREATE DATABASE [$database_name];
-        END
-    ");
+    try {
+      DB::statement("CREATE DATABASE IF NOT EXISTS `$database_name`");
+    } catch (\Exception $ex) {
+      dd($ex->getMessage());
+    }
   }
 
   /**
@@ -85,7 +84,7 @@ class Helper
     //        dd(  Config::get("database.connections.company.database"));
     Artisan::call('migrate', [
       //            '--database' => $dbName,
-      '--path' => 'database/migrations/company'
+      '--path' => 'database/migrations/society'
     ]);
   }
 
@@ -97,7 +96,7 @@ class Helper
   {
     //        config(['database.connections.company.database' => $dbName]);
     Artisan::call('db:seed', [
-      '--class' => 'CustomSeeder',
+      '--class' => 'DatabaseSeeder',
       '--force' => true,
     ]);
     //        dd(  Config::get("database.connections.company.database"));

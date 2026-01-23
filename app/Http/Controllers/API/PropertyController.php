@@ -2,17 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\CommonController;
 use Illuminate\Http\Request;
+use App\Models\Property;
 
-class WingController extends Controller
+class PropertyController extends CommonController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $data_query = Property::list_show_query();
+
+        if ($request->filled('search_string')) {
+            $data_query->where('wing_no', 'like', '%' . $request->search_string . '%');
+        }
+        $fields = ['id', 'wing_no'];
+        return $this->commonpagination($request, $data_query, $fields);
     }
 
     /**
@@ -23,13 +30,6 @@ class WingController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

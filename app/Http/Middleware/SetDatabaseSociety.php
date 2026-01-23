@@ -37,7 +37,7 @@ class SetDatabaseSociety
                 $society = $society_details;
             }
         }
-        if (isset($society->database_name) && !empty($society->database_name) && isset($society->database_username) && !empty($society->database_username) && isset($society->database_password) && !empty($society->database_password)) {
+        if (isset($society->database_name) && !empty($society->database_name) && isset($society->database_username) && !empty($society->database_username) && isset($society->database_password)) {
             $this->helper->set_society_wise_database($society->database_name);
         }
         return $next($request);

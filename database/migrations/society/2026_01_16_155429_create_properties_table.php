@@ -8,10 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('wings', function (Blueprint $table) {
+        Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('wing_name', 100);
-            $table->tinyInteger('status')->default(1)->comment('1=Active, 0=Inactive');
+            $table->string('wing_no', 100);
+            $table->string('floor_no', 100);
+            $table->string('flat_no', 100);
+            $table->string('bunglow_no', 100);
+            $table->tinyInteger('residency_type')->default(1)->comment('1=Apartment/Flats, 2=Bungalow, 3=Row House');
             $table->timestamps();
             $table->softDeletes();
         });

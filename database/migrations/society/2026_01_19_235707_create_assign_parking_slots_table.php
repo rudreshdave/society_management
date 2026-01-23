@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('parking_slots_id')->nullable();
-            $table->string('vehicle_no')->nullable();
-            $table->unsignedBigInteger('residents_id')->nullable();
+            $table->unsignedBigInteger('resident_vehicle_id')->nullable();
             $table->date('allocated_from')->nullable();
+            $table->date('allocated_to')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
@@ -27,8 +27,8 @@ return new class extends Migration
                 ->references('id')->on('parking_slots')
                 ->onDelete('cascade');
 
-            $table->foreign('residents_id')
-                ->references('id')->on('residents')
+            $table->foreign('resident_vehicle_id')
+                ->references('id')->on('resident_vehicles')
                 ->onDelete('cascade');
         });
     }

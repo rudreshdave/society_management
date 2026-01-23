@@ -34,6 +34,36 @@ class CommonController extends Controller
     }
   }
 
+  /**
+   * Display the specified resource.
+   */
+  public function show(Request $request, $id)
+  {
+    $data_query = $this->getModel()->list_show_query();
+    if (isset($id) && !empty($id)) {
+      $data_query = $data_query->where('id', $id);
+    }
+    $data_query = $data_query->first()->toArray();
+    if (isset($data_query) && !empty($data_query)) {
+      return $this->customResponse(1, trans("translate.record_found", ["model" => $this->model]), $data_query);
+    } else {
+      return $this->customResponse(8, trans("translate.record_not_found"));
+    }
+  }
+
+  public function destroy(string $id)
+  {
+    $model = $this->getModel();
+
+    $delete_record = $model::where(['id' => $id])->first();
+    if ($delete_record) {
+      $delete_record->Delete();
+      return $this->customResponse(1, trans("translate.record_deleted", ["model" => $this->model]));
+    } else {
+      return $this->customResponse(8, trans("translate.no_record_found"));
+    }
+  }
+
   function commonpagination($request, $data_query, $fields = [], $params = [])
   {
 
