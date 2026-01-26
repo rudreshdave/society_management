@@ -24,7 +24,8 @@ return new class extends Migration
             // Ordering (for swapping)
             $table->integer('sort_order')->default(0);
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->index(['module_type', 'module_id']);
             $table->index('sort_order');

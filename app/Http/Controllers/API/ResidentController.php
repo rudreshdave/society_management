@@ -3,12 +3,40 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\CommonController;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Models\Resident;
 use App\Http\Requests\ResidentRequest;
+use App\Services\ResidentService;
+use App\Helpers\Helper;
 
 class ResidentController extends CommonController
 {
+    use ApiResponse;
+
+    /**
+     * @var \App\Services\ResidentService
+     */
+    private $resident_service;
+
+    /**
+     * @var \App\Helpers\Helper
+     */
+    private $helper;
+
+    public $model = "Resident";
+
+    public function getModel()
+    {
+        return Resident::class;
+    }
+
+    public function __construct(ResidentService $resident_service, Helper $helper)
+    {
+        $this->resident_service = $resident_service;
+        $this->helper = $helper;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -29,7 +57,13 @@ class ResidentController extends CommonController
      */
     public function store(ResidentRequest $request)
     {
-        //
+        try {
+            $data = $request->all();
+            $save_resident = $this->resident_service->save_resident($data, $request);
+            return $save_resident;
+        } catch (\Exception $ex) {
+            return $this->customResponse(-1, null, $ex->getMessage());
+        }
     }
 
 

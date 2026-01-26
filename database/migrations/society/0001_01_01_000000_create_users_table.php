@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->tinyInteger('status')->nullable()->default(1)->comment('1=Active, 2=Inactive, 3=Blocked');
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes(); // adds deleted_at
         });
 
@@ -28,7 +29,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes(); // adds deleted_at
         });
 
@@ -36,7 +38,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignId('role_id')->nullable()->constrained()->nullOnDelete();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

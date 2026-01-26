@@ -17,7 +17,8 @@ return new class extends Migration
             $table->decimal('salary', 10, 2);
             $table->date('effective_from');
             $table->string('remark')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
 
             $table->foreign('staff_id')->references('id')->on('staffs')->onDelete('cascade');

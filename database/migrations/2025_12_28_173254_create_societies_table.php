@@ -44,7 +44,8 @@ return new class extends Migration
             $table->string('database_username')->nullable()->default(null);
             $table->string('database_password')->nullable()->default(null);
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             // ✅ Soft Deletes column
             $table->softDeletes(); // adds deleted_at

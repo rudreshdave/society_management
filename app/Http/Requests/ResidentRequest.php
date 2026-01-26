@@ -30,8 +30,8 @@ class ResidentRequest extends FormRequest
             'bunglow_no'        => 'nullable|string|max:20',
 
             'name'              => 'required|string|max:255',
-            'email'             => 'required|email|unique:residents,email',
-            'mobile'            => 'required|digits:10|unique:residents,mobile',
+            'email'             => 'required|email|unique:users,email',
+            'mobile'            => 'required|digits:10|unique:users,mobile',
             'alternate_mobile'  => 'nullable|digits:10',
 
             'move_in_date'      => 'required|date',

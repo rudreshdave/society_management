@@ -19,7 +19,8 @@ return new class extends Migration
             $table->date('allocated_from')->nullable();
             $table->date('allocated_to')->nullable();
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
 
             // Foreign Keys (recommended)

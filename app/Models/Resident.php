@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Resident extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['resident_type', 'user_id', 'property_id', 'alternate_mobile', 'move_in_date', 'emergency_contact'];
+    protected $fillable = ['resident_type', 'user_id', 'property_id', 'alternate_mobile', 'move_in_date', 'emergency_contact', ];
     protected $hidden = ['pivot'];
     protected $appends = ['recident_type_label'];
     protected $recidency_type_labels = [1 => "Owner", 2 => "Tenant"];

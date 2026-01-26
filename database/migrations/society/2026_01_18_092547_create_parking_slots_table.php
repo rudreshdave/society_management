@@ -24,7 +24,8 @@ return new class extends Migration
             // 1 = Active, 2 = Inactive
             $table->unsignedTinyInteger('status')->default(1)->comment('1=Active, 2=Inactive')->nullable();
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
         });
     }

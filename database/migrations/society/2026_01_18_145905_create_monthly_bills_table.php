@@ -20,7 +20,8 @@ return new class extends Migration
             $table->decimal('total_amount', 10, 2)->nullable();
             $table->tinyInteger('status')->default(0)->default(0)->comment('0=Pending, 1=Paid, 2=Overdue')->nullable();
             $table->date('due_date')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
 
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->decimal('amount', 10, 2)->nullable();
             $table->date('effective_from')->nullable();
             $table->text('notes')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
         });
     }

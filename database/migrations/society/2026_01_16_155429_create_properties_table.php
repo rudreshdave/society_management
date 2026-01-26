@@ -15,7 +15,8 @@ return new class extends Migration
             $table->string('flat_no', 100);
             $table->string('bunglow_no', 100);
             $table->tinyInteger('residency_type')->default(1)->comment('1=Apartment/Flats, 2=Bungalow, 3=Row House');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
         });
     }

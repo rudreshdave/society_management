@@ -17,7 +17,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes(); // adds deleted_at
         });
     }

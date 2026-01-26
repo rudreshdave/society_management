@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('code', 5)->nullable(); // e.g. MH, GJ
             $table->string('country')->default('India');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes(); // adds deleted_at
         });
     }

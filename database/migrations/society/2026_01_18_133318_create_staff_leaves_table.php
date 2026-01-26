@@ -18,7 +18,8 @@ return new class extends Migration
             $table->date('to_date');
             $table->string('reason')->nullable();
             $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
 
             $table->foreign('staff_id')->references('id')->on('staffs')->onDelete('cascade');

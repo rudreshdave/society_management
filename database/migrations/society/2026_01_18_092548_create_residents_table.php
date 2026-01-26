@@ -13,8 +13,8 @@ return new class extends Migration
 
             $table->enum('resident_type', ['Owner', 'Renter']);
 
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('property_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('property_id')->nullable();
 
             $table->string('alternate_mobile', 15)->nullable();
 
@@ -22,7 +22,10 @@ return new class extends Migration
 
             $table->string('emergency_contact', 15)->nullable();
 
-            $table->timestamps();
+            $table->unsignedBigInteger('parking_slot_id')->nullable();
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
 
             // 🔗 Foreign Keys

@@ -32,7 +32,7 @@ class Helper
       $this->run_migrations();
       // run seeders
       $this->run_seeders();
-      if (Auth::user() && Auth::user()->usertype == 1) {
+      if (Auth::user()->roles[0]->id == 2) {
         $this->add_admin_user($database_name);
         return true;
       }
@@ -102,6 +102,8 @@ class Helper
     //        dd(  Config::get("database.connections.company.database"));
   }
 
+
+
   /**
    * Summary of generateRandomPassword
    * @param mixed $length
@@ -121,6 +123,77 @@ class Helper
     $password = str_shuffle($password);
     return substr($password, 0, $length);
   }
+
+  public function add_admin_user($database_name)
+  {
+    try {
+      DB::setDefaultConnection('society');
+
+      $name = Auth::user()->name;
+      $email = Auth::user()->email;
+      $mobile = Auth::user()->mobile;
+
+      // Check if a user with the same name, email, and phone number already exists
+      $existingUser = DB::connection('society')->table('users')
+        ->where('name', $name)
+        ->where('email', $email)
+        ->where('mobile', $mobile)
+        ->first();
+
+      if (!isset($existingUser) || empty($existingUser)) {
+        $datas = [
+          'name' => Auth::user()->name,
+          'email' => Auth::user()->email,
+          'mobile' => Auth::user()->mobile  ?? null,
+          'password' => Auth::user()->password ?? null,
+          'status' => 1
+        ];
+
+        try {
+          $id = DB::connection('society')->table('users')->insertGetId($datas);
+          /**
+           * Copy roles from main DB user_roles
+           */
+          if (isset(Auth::user()->roles) && !empty(Auth::user()->roles)) {
+            foreach (Auth::user()->roles as $role) {
+              DB::connection('society')->table('user_roles')->insert([
+                'user_id' => $id,
+                'role_id' => $role->id ?? null
+              ]);
+            }
+          }
+        } catch (\Exception $e) {
+          dd($e->getMessage(), $e->getLine(), $e->getFile());
+          return $this->customResponse(-1, null, $e->getMessage());
+        }
+
+        $this->configure_database_connection(env('DB_DATABASE'));
+        $society_id = Auth::user()->currentAccessToken()->abilities['society_id'];
+        $existingSocietyUser = DB::connection('society')->table('user_roles')
+          ->where(['society_id' => $society_id, 'user_id' => Auth::id()])
+          ->first();
+        // dd($existingSocietyUser);
+        if (isset($existingSocietyUser) && !empty($existingSocietyUser)) {
+          $society_user_data = [
+            'society_user_id' => $id
+          ];
+          DB::connection('society')->table('user_roles')->where(['society_id' => $society_id, 'user_id' => Auth::id()])->update($society_user_data);
+          $this->configure_database_connection($database_name);
+        } elseif (!isset($existingSocietyUser) || empty($existingSocietyUser)) {
+          $user_roles_data = [
+            'society_user_id' => $id
+          ];
+        }
+      }
+
+
+
+      return $this->customResponse(1, null, 'Admin user added successfully.');
+    } catch (\Exception $e) {
+      return $this->customResponse(-1, null, $e->getMessage());
+    }
+  }
+
 
   /**
    * Summary of send_sms

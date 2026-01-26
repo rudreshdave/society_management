@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('staff_id');
             $table->date('attendance_date');
             $table->enum('status', ['Present', 'Absent', 'Half', 'Leave']);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
 
             $table->foreign('staff_id')->references('id')->on('staffs')->onDelete('cascade');

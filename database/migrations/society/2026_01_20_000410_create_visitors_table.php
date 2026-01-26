@@ -30,7 +30,8 @@ return new class extends Migration
                 ->comment('1=PreApprove, 2=Approve, 3=Rejected');
 
             $table->unsignedBigInteger('created_by'); // guard / admin / resident
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
 
             // Foreign Keys (recommended)

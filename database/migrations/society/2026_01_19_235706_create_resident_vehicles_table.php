@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string('fuel_type')->nullable();
             $table->unsignedBigInteger('parking_slot_id')->nullable();
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->softDeletes();
             $table->foreign('resident_id')
                 ->references('id')->on('residents')

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,9 +16,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RolesTableSeeder::class,
-            SuperAdminSeeder::class,
             StatesTableSeeder::class,
             CitiesTableSeeder::class,
         ]);
+
+         $currentDatabase = DB::getDatabaseName();
+
+        if ($currentDatabase === 'society_management') {
+            $this->call(SuperAdminSeeder::class);
+        }
     }
 }
